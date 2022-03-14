@@ -10,4 +10,30 @@
         android:textSize="25sp"
         android:text="여기는 스탑워치 프래그먼트다!" />
 
+    <Button
+        android:id="@+id/reset_button"
+        android:background="@drawable/violet_button_selector"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="@string/reset_record" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:background="@drawable/violet_button_selector"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="@string/start_record" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/save_record"
+        android:background="@drawable/green_button_selector" />
 </LinearLayout>
