@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--id값은 어떤 항목을 선택했는지 구분하기 위해 NaviActivity.kt에서 사용-->
+
+    <item
+        android:id="@+id/stop_watch_fragment"
+        android:title="@string/stop_watch"
+        android:icon="@drawable/ic_launcher_background" />
+
+    <item
+        android:id="@+id/record_fragment"
+        android:title="@string/record"
+        android:icon="@drawable/ic_launcher_background" />
+
+    <item
+        android:id="@+id/target_fragment"
+        android:title="@string/target"
+        android:icon="@drawable/ic_launcher_background" />
+
+    <item
+        android:id="@+id/settings_fragment"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_launcher_background" />
+
+</menu>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TimeIsGold</string>
+    <string name="stop_watch">스톱 워치</string>
+    <string name="record">기록</string>
+    <string name="target">목표</string>
+    <string name="settings">설정</string>
+    <string name="save_record">기록 저장</string>
+</resources>
