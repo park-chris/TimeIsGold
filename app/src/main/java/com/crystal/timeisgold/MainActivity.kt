@@ -2,6 +2,7 @@ package com.crystal.timeisgold
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,13 +19,26 @@ private const val TAG_STOP_WATCH = "stop_watch_fragment"
 private const val TAG_RECORD = "record_fragment"
 private const val TAG_TARGET = "target_fragment"
 private const val TAG_SETTINGS = "settings_fragment"
+private const val KEY_TAG = "key_tag"
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setFragment(TAG_STOP_WATCH, StopWatchFragment())
+        val currentFragment = savedInstanceState?.getString(KEY_TAG, null) ?: null
+
+        if (currentFragment != null) {
+            when (currentFragment) {
+                "StopWatchFragment" -> setFragment(TAG_STOP_WATCH, StopWatchFragment())
+                "RecordFragment" -> setFragment(TAG_RECORD, RecordFragment())
+                "TargetFragment" ->setFragment(TAG_TARGET, TargetFragment())
+                "SettingsFragment" -> setFragment(TAG_SETTINGS, SettingsFragment())
+            }
+            true
+        }   else {
+            setFragment(TAG_STOP_WATCH, StopWatchFragment())
+        }
 
         setupEvents()
 
@@ -32,8 +46,14 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
     }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        val mainFM  = supportFragmentManager.findFragmentById(R.id.main_navi_fragment_container)
+        savedInstanceState.putString(KEY_TAG, mainFM.toString())
+    }
+
 
     private fun setupEvents() {
         binding.mainNavi.setOnItemSelectedListener { item ->
@@ -97,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
         ft.commitAllowingStateLoss()
 
-
     }
+
 }
 

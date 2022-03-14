@@ -5,21 +5,21 @@
     <item
         android:id="@+id/stop_watch_fragment"
         android:title="@string/stop_watch"
-        android:icon="@drawable/ic_launcher_background" />
+        android:icon="@drawable/ic_stop_watch" />
 
     <item
         android:id="@+id/record_fragment"
         android:title="@string/record"
-        android:icon="@drawable/ic_launcher_background" />
+        android:icon="@drawable/ic_record" />
 
     <item
         android:id="@+id/target_fragment"
         android:title="@string/target"
-        android:icon="@drawable/ic_launcher_background" />
+        android:icon="@drawable/ic_target" />
 
     <item
         android:id="@+id/settings_fragment"
         android:title="@string/settings"
-        android:icon="@drawable/ic_launcher_background" />
+        android:icon="@drawable/ic_settings" />
 
 </menu>

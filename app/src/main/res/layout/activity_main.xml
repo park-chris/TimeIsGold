@@ -14,7 +14,7 @@
         android:id="@+id/main_navi_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9" />
+        android:layout_weight="9.5" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_navi"
@@ -22,7 +22,9 @@
         android:layout_height="wrap_content"
         app:menu="@menu/navi_menu"
         app:itemBackground="@color/white_pink"
-        android:layout_weight="1" />
+        android:layout_weight="0.5"
+        app:itemIconTint="@drawable/navi_menu_selector"
+        app:itemTextColor="@drawable/navi_menu_selector"/>
 
 </LinearLayout>
 
