@@ -14,15 +14,17 @@
         android:id="@+id/main_navi_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9.5" />
+        android:layout_weight="9" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_navi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/navi_menu"
+        android:background="@color/white_pink"
         app:itemBackground="@color/white_pink"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
+        app:labelVisibilityMode="unlabeled"
         app:itemIconTint="@drawable/navi_menu_selector"
         app:itemTextColor="@drawable/navi_menu_selector"/>
 
