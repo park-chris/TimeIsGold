@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.crystal.timeisgold.R
 
-class RecordFragment: Fragment() {
+class RecordFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_record, container, false)
+        val view = inflater.inflate(R.layout.fragment_record, container, false)
+
+
+        return view
     }
 }

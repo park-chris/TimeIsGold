@@ -13,6 +13,8 @@ class TargetFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_target, container, false)
+        val view = inflater.inflate(R.layout.fragment_target, container, false)
+
+        return view
     }
 }
