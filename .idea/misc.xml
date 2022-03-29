@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_navi.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_record.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_record_detail.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_stop_watch.xml" value="0.19763641357421877" />
         <entry key="app/src/main/res/layout/fragment_target.xml" value="0.15070921985815602" />

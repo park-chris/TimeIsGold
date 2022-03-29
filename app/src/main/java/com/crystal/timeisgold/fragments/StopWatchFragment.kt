@@ -1,9 +1,9 @@
 package com.crystal.timeisgold.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.crystal.timeisgold.MainActivity
 import com.crystal.timeisgold.R
 import java.util.*
 
@@ -30,22 +31,25 @@ class StopWatchFragment : Fragment() {
 
     private lateinit var timeTextView: TextView
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stop_watch, container, false)
+        val mActivity = activity as MainActivity
 
         startButton = view.findViewById(R.id.start_button)
         saveButton = view.findViewById(R.id.save_button)
         resetButton = view.findViewById(R.id.reset_button)
-
         timeTextView = view.findViewById(R.id.time_text_view)
 
         setValues()
         setupEvents()
+
+        saveButton.setOnClickListener {
+            mActivity.openRecordDetail()
+        }
 
         return view
     }
@@ -79,9 +83,9 @@ class StopWatchFragment : Fragment() {
             time++                  // period=1000, 0.01초마다 time를 1씩 증가
             Log.d(TAG, "타임: $time")
 
-            var hour = 0
-            var min = 0
-            var sec = 0
+            val hour: Int
+            val min: Int
+            val sec: Int
 
             if (time >= 3600) {
                 hour = time / 3600
@@ -89,17 +93,19 @@ class StopWatchFragment : Fragment() {
                 min = extra / 60
                 sec = extra % 60
 
+            } else {
+                hour = 0
+                min = time / 60
+                sec = time % 60
             }
 
-            min = time / 60
-            sec = time % 60
 
-            val handler: Handler = object : Handler(Looper.getMainLooper()) {
-                override fun handleMessage(msg: Message) {
+            val timerHandler = Handler(Looper.getMainLooper()) {
+                Handler(Looper.getMainLooper()).post {
                     timeTextView.text = "$hour: $min: $sec"
                 }
             }
-            handler.obtainMessage().sendToTarget()
+            timerHandler.obtainMessage().sendToTarget()
 
         }
 
@@ -122,6 +128,7 @@ class StopWatchFragment : Fragment() {
         timeTextView.text = "0: 0: 0"
 
     }
+
 
 
 }

@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.crystal.timeisgold.databinding.ActivityMainBinding
-import com.crystal.timeisgold.fragments.RecordFragment
-import com.crystal.timeisgold.fragments.SettingsFragment
-import com.crystal.timeisgold.fragments.StopWatchFragment
-import com.crystal.timeisgold.fragments.TargetFragment
+import com.crystal.timeisgold.fragments.*
 
 lateinit var binding: ActivityMainBinding
 
@@ -41,10 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupEvents()
-
-
-
-
 
     }
 
@@ -116,6 +109,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         ft.commitAllowingStateLoss()
+
+    }
+
+    fun openRecordDetail() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_navi_fragment_container, RecordDetailFragment())
+            .commit()
 
     }
 
