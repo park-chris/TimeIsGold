@@ -1,6 +1,7 @@
 package com.crystal.timeisgold.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,6 +21,12 @@ private const val TAG = "StopWatchFragment"
 
 class StopWatchFragment : Fragment() {
 
+    interface Callbacks {
+        fun onRecordSelected()
+    }
+
+    private var callbacks: Callbacks? = null
+
     private var time = 0
     private var isRunning = false
     private var timerTask: Timer? = null
@@ -31,13 +38,17 @@ class StopWatchFragment : Fragment() {
 
     private lateinit var timeTextView: TextView
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stop_watch, container, false)
-        val mActivity = activity as MainActivity
 
         startButton = view.findViewById(R.id.start_button)
         saveButton = view.findViewById(R.id.save_button)
@@ -48,10 +59,15 @@ class StopWatchFragment : Fragment() {
         setupEvents()
 
         saveButton.setOnClickListener {
-            mActivity.openRecordDetail()
+            callbacks?.onRecordSelected()
         }
 
         return view
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
 

@@ -2,7 +2,6 @@ package com.crystal.timeisgold
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,9 +15,11 @@ private const val TAG_STOP_WATCH = "stop_watch_fragment"
 private const val TAG_RECORD = "record_fragment"
 private const val TAG_TARGET = "target_fragment"
 private const val TAG_SETTINGS = "settings_fragment"
-private const val KEY_TAG = "key_tag"
 
-class MainActivity : AppCompatActivity() {
+private const val KEY_TAG = "current_fragment"
+
+class MainActivity : AppCompatActivity(), StopWatchFragment.Callbacks {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -37,16 +38,27 @@ class MainActivity : AppCompatActivity() {
             setFragment(TAG_STOP_WATCH, StopWatchFragment())
         }
 
+
         setupEvents()
 
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        val mainFM  = supportFragmentManager.findFragmentById(R.id.main_navi_fragment_container)
+        val mainFM  = supportFragmentManager.findFragmentById(R.id.fragment_container)
         savedInstanceState.putString(KEY_TAG, mainFM.toString())
     }
 
+
+//    스탑워치 프래그먼트에서 레코드디테일프래그먼트 호출
+    override fun onRecordSelected() {
+        val fragment = RecordDetailFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
     private fun setupEvents() {
         binding.mainNavi.setOnItemSelectedListener { item ->
@@ -55,7 +67,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.record_fragment -> setFragment(TAG_RECORD, RecordFragment())
                 R.id.target_fragment -> setFragment(TAG_TARGET, TargetFragment())
                 R.id.settings_fragment -> setFragment(TAG_SETTINGS, SettingsFragment())
-
             }
             true
         }
@@ -69,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
 //        트랜잭션에 tag로 전달된 fragment가 없을 경우 add
         if (manager.findFragmentByTag(tag) == null) {
-            ft.add(R.id.main_navi_fragment_container, fragment, tag)
+            ft.add(R.id.fragment_container, fragment, tag)
         }
 
         val stopWatch = manager.findFragmentByTag(TAG_STOP_WATCH)
@@ -111,13 +122,6 @@ class MainActivity : AppCompatActivity() {
         ft.commitAllowingStateLoss()
 
     }
-/*
-    fun openRecordDetail() {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main_navi_fragment_container, RecordDetailFragment())
-            .commit()
-
-    }*/
 
 }
 

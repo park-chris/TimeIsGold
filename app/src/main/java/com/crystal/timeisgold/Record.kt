@@ -8,7 +8,7 @@ import java.util.*
 @Entity
 data class Record(@PrimaryKey val id: UUID = UUID.randomUUID(),
                   var item: String = "",
-                  var startTime: Date = Date(),
+                  var date: Date = Date(),
                   var durationTime: Int = 0,
                   var memo: String = ""
 )
