@@ -111,13 +111,13 @@ class MainActivity : AppCompatActivity() {
         ft.commitAllowingStateLoss()
 
     }
-
+/*
     fun openRecordDetail() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_navi_fragment_container, RecordDetailFragment())
             .commit()
 
-    }
+    }*/
 
 }
 
