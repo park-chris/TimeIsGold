@@ -14,18 +14,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.crystal.timeisgold.MainActivity
 import com.crystal.timeisgold.R
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 private const val TAG = "StopWatchFragment"
 
-
 class StopWatchFragment : Fragment() {
-
-    interface Callbacks {
-        fun onRecordSelected()
-    }
-
-    private var callbacks: Callbacks? = null
 
     private var time = 0
     private var isRunning = false
@@ -37,11 +32,8 @@ class StopWatchFragment : Fragment() {
     private lateinit var resetButton: Button
 
     private lateinit var timeTextView: TextView
+    private lateinit var date: Date
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callbacks = context as Callbacks?
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,16 +51,14 @@ class StopWatchFragment : Fragment() {
         setupEvents()
 
         saveButton.setOnClickListener {
-            callbacks?.onRecordSelected()
+            pause()
+            val now: Long = System.currentTimeMillis()
+            date = Date(now)
         }
 
         return view
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null
-    }
 
 
     private fun setValues() {
@@ -79,7 +69,6 @@ class StopWatchFragment : Fragment() {
 
         startButton.setOnClickListener {
             isRunning = !isRunning
-
             if (isRunning) start() else pause()
         }
 
@@ -144,6 +133,7 @@ class StopWatchFragment : Fragment() {
         timeTextView.text = "0: 0: 0"
 
     }
+
 
 
 

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="30dp"
@@ -11,14 +12,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="날짜"
+        android:text="@string/date"
         android:textSize="20sp"
-        android:textColor="@color/pastel_violet"
+        android:textColor="@color/green_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/date_button"
+        android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="6월 30일"
@@ -31,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/pastel_violet"
-        app:layout_constraintTop_toBottomOf="@id/date_button"
+        app:layout_constraintTop_toBottomOf="@id/date_text_view"
         tools:layout_editor_absoluteX="30dp" />
 
     <TextView
@@ -39,8 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="항목"
-        android:textColor="@color/pastel_violet"
+        android:text="@string/item"
+        android:textColor="@color/green_blue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -67,8 +68,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="시작시간"
-        android:textColor="@color/pastel_violet"
+        android:text="@string/start_time"
+        android:textColor="@color/green_blue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -94,8 +95,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="종료시간"
-        android:textColor="@color/pastel_violet"
+        android:text="@string/end_time"
+        android:textColor="@color/green_blue"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/end_time_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,8 +124,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="소요시간"
-        android:textColor="@color/pastel_violet"
+        android:text="@string/duration_time"
+        android:textColor="@color/green_blue"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/duration_time_text"
         app:layout_constraintStart_toStartOf="parent" />
@@ -135,7 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="05:00:00"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -153,9 +154,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="메모"
+        android:text="@string/memo"
         android:textSize="20sp"
-        android:textColor="@color/pastel_violet"
+        android:textColor="@color/green_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -163,24 +164,39 @@
     <EditText
         android:id="@+id/memo_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:minHeight="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <Button
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
+        android:id="@+id/cancel_button"
+        android:layout_width="150dp"
         android:layout_height="50dp"
-        android:background="@drawable/green_button_selector"
-        android:text="@string/save_record"
-        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/violet_button_selector"
+        android:text="@string/cancel"
+        android:textColor="@color/deep_green"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/violet_button_selector"
+        android:text="@string/save"
+        android:textColor="@color/deep_green"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintVertical_bias="0.7" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

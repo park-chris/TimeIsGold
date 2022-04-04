@@ -1,6 +1,7 @@
 package com.crystal.timeisgold
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.crystal.timeisgold.database.RecordDao
 import com.crystal.timeisgold.database.RecordDatabase
@@ -22,8 +23,14 @@ class RecordRepository private constructor(context: Context){
 
     private val recordDao = database.RecordDao()
 
-    fun getRecords(): List<Record> = recordDao.getRecords()
-    fun getRecord(id: UUID): Record? = recordDao.getRecord(id)
+    fun getRecords(): LiveData<List<Record>> = recordDao.getRecords()
+    fun getRecord(id: UUID): LiveData<Record?> = recordDao.getRecord(id)
+
+    fun updateRecord(record: Record) {
+        executor.execute {
+            recordDao.updateRecord(record)
+        }
+    }
 
     fun addRecord(record: Record) {
         executor.execute{

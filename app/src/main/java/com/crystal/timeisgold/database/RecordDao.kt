@@ -1,5 +1,6 @@
 package com.crystal.timeisgold.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -11,10 +12,10 @@ import java.util.*
 interface RecordDao {
 
     @Query("SELECT * FROM record")
-    fun getRecords(): List<Record>
+    fun getRecords(): LiveData<List<Record>>
 
     @Query("SELECT * FROM record WHERE id=(:id)")
-    fun getRecord(id: UUID): Record?
+    fun getRecord(id: UUID): LiveData<Record?>
 
     @Update
     fun updateRecord(record: Record)
