@@ -22,7 +22,6 @@
         android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6월 30일"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +77,6 @@
         android:id="@+id/start_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12:30:30"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"/>
@@ -106,7 +104,6 @@
         android:id="@+id/end_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="17:30:30"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/textView4" />
@@ -135,7 +132,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="05:00:00"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />

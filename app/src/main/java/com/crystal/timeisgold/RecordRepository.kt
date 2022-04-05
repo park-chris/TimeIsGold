@@ -19,9 +19,8 @@ class RecordRepository private constructor(context: Context){
         DATABASE_NAME
     ).build()
 
-    private val executor = Executors.newSingleThreadExecutor()
-
     private val recordDao = database.RecordDao()
+    private val executor = Executors.newSingleThreadExecutor()
 
     fun getRecords(): LiveData<List<Record>> = recordDao.getRecords()
     fun getRecord(id: UUID): LiveData<Record?> = recordDao.getRecord(id)

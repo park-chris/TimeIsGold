@@ -3,6 +3,8 @@ package com.crystal.timeisgold
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -126,9 +128,11 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks {
     override fun onRecordSelected(recordId: UUID) {
         val fragment = RecordDetailFragment.newInstance(recordId)
 
+//        binding.mainNavi.visibility = View.GONE
+
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack("back")
             .commit()
     }

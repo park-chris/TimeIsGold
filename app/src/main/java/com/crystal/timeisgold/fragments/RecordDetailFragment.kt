@@ -1,8 +1,8 @@
 package com.crystal.timeisgold.fragments
 
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +14,14 @@ import com.crystal.timeisgold.Record
 import com.crystal.timeisgold.RecordViewModel
 import java.util.*
 import androidx.lifecycle.Observer
+import com.crystal.timeisgold.utils.ContextUtil
+import kotlin.collections.ArrayList
 
 private const val ARG_RECORD_ID = "record_id"
+
+private const val TAG = "RecordDetailFragment"
+
+private const val PREF_TAG = "pref_shared_item"
 
 class RecordDetailFragment : Fragment() {
 
@@ -28,7 +34,8 @@ class RecordDetailFragment : Fragment() {
     private lateinit var durationTimeTextView: TextView
     private lateinit var startTimeTextView: TextView
     private lateinit var endTimeTextView: TextView
-
+    private var spinnerValue = ""
+    private var itemList: ArrayList<String> = arrayListOf("default")
 
     private val recordViewModel: RecordViewModel by lazy {
         ViewModelProvider(this).get(RecordViewModel::class.java)
@@ -38,7 +45,28 @@ class RecordDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         record = Record()
         val recordId: UUID = arguments?.getSerializable(ARG_RECORD_ID) as UUID
+
         recordViewModel.loadRecord(recordId)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupEvents()
+
+        val prefList = ContextUtil.getArrayPref(requireContext(), PREF_TAG)
+
+        if (prefList.size > 0) {
+            itemList = prefList
+        }
+
+
+//        Spinner Adapter 설정
+
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.custom_spinner_item, R.id.text_first, itemList)
+        spinner.adapter = adapter
+
+
     }
 
     override fun onCreateView(
@@ -57,21 +85,6 @@ class RecordDetailFragment : Fragment() {
         startTimeTextView = view.findViewById(R.id.start_time_text)
         endTimeTextView = view.findViewById(R.id.end_time_text)
 
-
-//        Spinner 드롭다운에서 띄울 항목
-        val itemList: MutableList<String> = mutableListOf("기본", "운동", "공부")
-//        Spinner Adapter 설정
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_item, R.id.text_first, itemList)
-        spinner.adapter = adapter
-//        Spinner 클릭 이벤트 설정
-/*        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(requireContext(), itemList[position], Toast.LENGTH_SHORT).show()
-            }
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {
-            }
-        }*/
 
         return view
     }
@@ -95,9 +108,56 @@ class RecordDetailFragment : Fragment() {
         super.onStop()
         recordViewModel.saveRecord(record)
         updateUI()
+        ContextUtil.setArrayPref(requireContext(), PREF_TAG, itemList)
     }
 
 
+    private fun setupEvents() {
+
+        val memoWatcher = object : TextWatcher {
+            override fun beforeTextChanged(sequence: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+                record.memo = sequence.toString()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        }
+
+        memoEditText.addTextChangedListener(memoWatcher)
+
+
+        saveButton.setOnClickListener {
+            if (spinnerValue != "") {
+                record.item = spinnerValue
+            }
+            recordViewModel.saveRecord(record)
+            updateUI()
+        }
+
+
+
+
+//        Spinner 클릭 이벤트 설정
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                spinnerValue = itemList[position]
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+            }
+
+        }
+
+    }
 
 
     private fun updateUI() {
@@ -106,6 +166,12 @@ class RecordDetailFragment : Fragment() {
         startTimeTextView.text = recordViewModel.convertTimestampToTime(record.date)
         endTimeTextView.text = recordViewModel.getEndTime(record.date, record.durationTime)
         durationTimeTextView.text = recordViewModel.getDurationTime(record.durationTime)
+
+        for (i in 0 until itemList.size) {
+            if (itemList[i] == record.item) {
+                spinner.setSelection(i)
+            }
+        }
     }
 
     companion object {
@@ -122,7 +188,8 @@ class RecordDetailFragment : Fragment() {
         }
 
 
-    }
 
+
+    }
 
 }
