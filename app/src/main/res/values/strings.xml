@@ -4,7 +4,7 @@
     <string name="record">기록</string>
     <string name="target">목표</string>
     <string name="settings">설정</string>
-<string name="reset_record">초기화</string>
+    <string name="reset_record">초기화</string>
     <string name="start_record">시작</string>
     <string name="stop_record">중지</string>
     <string name="save_record">기록 저장</string>
@@ -16,4 +16,17 @@
     <string name="end_time">종료 시간</string>
     <string name="duration_time">소요 시간</string>
     <string name="memo">메모</string>
+    <string name="add_item">옵션 추가</string>
+    <string name="add">추가</string>
+    <string name="app_settings">앱 설정</string>
+    <string name="language">언어</string>
+    <string name="theme">테마</string>
+    <string name="item_settings">항목 설정</string>
+    <string name="light_theme">밝은 화면</string>
+    <string name="dark_theme">어두운 화면</string>
+    <string name="remove">삭제</string>
+    <string name="change">변경</string>
+    <string name="tip">도움말</string>
+    <string name="app_information">앱 정보</string>
+    <string name="app_version">현재 앱 버전</string>
 </resources>

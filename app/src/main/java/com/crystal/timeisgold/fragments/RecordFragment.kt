@@ -1,6 +1,7 @@
 package com.crystal.timeisgold.fragments
 
 import android.content.Context
+import android.icu.lang.UCharacter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,12 +14,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.timeisgold.R
 import com.crystal.timeisgold.Record
 import com.crystal.timeisgold.RecordRepository
 import com.crystal.timeisgold.RecordViewModel
+import com.crystal.timeisgold.utils.UIUtil
 import java.util.*
 
 private const val TAG = "RecordListFragment"
@@ -96,11 +99,13 @@ class RecordFragment : Fragment() {
 
         fun bind(record: Record) {
             this.record = record
-            startTimeTextView.text = this.record.durationTime.toString()
-            endTimeTextView.text = this.record.durationTime.toString()
-            durationTimeTextView.text = this.record.durationTime.toString()
+            startTimeTextView.text = "시작 시간  ${UIUtil.getStartTime(this.record.date)}"
+            endTimeTextView.text = "종료 시간  ${UIUtil.getEndTime(this.record.date, record.durationTime)}"
+            durationTimeTextView.text = "소요 시간  ${UIUtil.getDurationTime(this.record.durationTime)}"
             itemTextView.text = this.record.item
-            dateTextView.text = this.record.date.toString()
+            dateTextView.text = UIUtil.convertTimestampToDate(this.record.date)
+
+
         }
 
         override fun onClick(v: View?) {

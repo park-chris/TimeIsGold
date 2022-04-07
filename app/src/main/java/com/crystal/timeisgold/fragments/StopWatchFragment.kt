@@ -1,6 +1,5 @@
 package com.crystal.timeisgold.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -12,15 +11,27 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.crystal.timeisgold.MainActivity
+import androidx.lifecycle.ViewModelProvider
 import com.crystal.timeisgold.R
-import java.time.LocalDate
-import java.time.LocalDateTime
+import com.crystal.timeisgold.Record
+import com.crystal.timeisgold.RecordViewModel
+import com.crystal.timeisgold.utils.UIUtil
 import java.util.*
+
 
 private const val TAG = "StopWatchFragment"
 
 class StopWatchFragment : Fragment() {
+
+    interface Callbacks {
+        fun onRecordSelected(recordId: UUID)
+    }
+
+    private var callbacks: Callbacks? = null
+
+    private val recordViewModel: RecordViewModel by lazy {
+        ViewModelProvider(this).get(RecordViewModel::class.java)
+    }
 
     private var time = 0
     private var isRunning = false
@@ -32,7 +43,9 @@ class StopWatchFragment : Fragment() {
     private lateinit var resetButton: Button
 
     private lateinit var timeTextView: TextView
-    private lateinit var date: Date
+    private var date: Date = Date(System.currentTimeMillis())
+
+
 
 
     override fun onCreateView(
@@ -50,25 +63,32 @@ class StopWatchFragment : Fragment() {
         setValues()
         setupEvents()
 
-        saveButton.setOnClickListener {
-            pause()
-            val now: Long = System.currentTimeMillis()
-            date = Date(now)
-        }
-
         return view
+
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
 
+    }
 
     private fun setValues() {
-        timeTextView.text = "0: 0: 0"
+
+        if (time != 0) {
+            timeTextView.text = UIUtil.getDurationTime(time)
+        } else {
+            timeTextView.text = "00: 00: 00"
+        }
     }
 
     private fun setupEvents() {
 
         startButton.setOnClickListener {
             isRunning = !isRunning
+            if (time == 0) {
+                date = Date(System.currentTimeMillis())
+            }
             if (isRunning) start() else pause()
         }
 
@@ -76,6 +96,24 @@ class StopWatchFragment : Fragment() {
             reset()
         }
 
+
+        saveButton.setOnClickListener {
+            pause()
+            val record = Record()
+            recordViewModel.addRecord(record)
+            record.date = date
+            record.durationTime = time
+            recordViewModel.saveRecord(record)
+            Log.d(TAG, "저장된 레코드 아이디 : ${record.id}")
+            callbacks?.onRecordSelected(record.id)
+        }
+
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
 
@@ -88,26 +126,9 @@ class StopWatchFragment : Fragment() {
             time++                  // period=1000, 0.01초마다 time를 1씩 증가
             Log.d(TAG, "타임: $time")
 
-            val hour: Int
-            val min: Int
-            val sec: Int
-
-            if (time >= 3600) {
-                hour = time / 3600
-                val extra = time % 3600
-                min = extra / 60
-                sec = extra % 60
-
-            } else {
-                hour = 0
-                min = time / 60
-                sec = time % 60
-            }
-
-
             val timerHandler = Handler(Looper.getMainLooper()) {
                 Handler(Looper.getMainLooper()).post {
-                    timeTextView.text = "$hour: $min: $sec"
+                    timeTextView.text = UIUtil.getDurationTime(time)
                 }
             }
             timerHandler.obtainMessage().sendToTarget()
@@ -130,10 +151,9 @@ class StopWatchFragment : Fragment() {
         time = 0        // 시간저장 변수 초기화
         isRunning = false
         startButton.setText(R.string.start_record)
-        timeTextView.text = "0: 0: 0"
+        timeTextView.text = "00: 00: 00"
 
     }
-
 
 
 

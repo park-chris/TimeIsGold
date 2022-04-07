@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -22,7 +21,7 @@ private const val TAG_SETTINGS = "settings_fragment"
 
 private const val KEY_TAG = "current_fragment"
 
-class MainActivity : AppCompatActivity(), RecordFragment.Callbacks {
+class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +59,6 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks {
     private fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val ft: FragmentTransaction = manager.beginTransaction()
-
-        val recordDetail = manager.findFragmentByTag("record_detail_fragment")
 
 //        트랜잭션에 tag로 전달된 fragment가 없을 경우 add
         if (manager.findFragmentByTag(tag) == null) {
@@ -122,21 +119,16 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks {
 
     }
 
-
-
     //    스탑워치 프래그먼트에서 레코드디테일프래그먼트 호출
     override fun onRecordSelected(recordId: UUID) {
         val fragment = RecordDetailFragment.newInstance(recordId)
 
-//        binding.mainNavi.visibility = View.GONE
-
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_container, fragment)
-            .addToBackStack("back")
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
             .commit()
     }
-
 
 }
 

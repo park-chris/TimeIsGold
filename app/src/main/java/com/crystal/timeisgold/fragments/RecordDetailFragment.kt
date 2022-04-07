@@ -1,12 +1,16 @@
 package com.crystal.timeisgold.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.crystal.timeisgold.R
@@ -15,6 +19,9 @@ import com.crystal.timeisgold.RecordViewModel
 import java.util.*
 import androidx.lifecycle.Observer
 import com.crystal.timeisgold.utils.ContextUtil
+import com.crystal.timeisgold.utils.CustomDialog
+import com.crystal.timeisgold.utils.UIUtil
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.collections.ArrayList
 
 private const val ARG_RECORD_ID = "record_id"
@@ -35,7 +42,8 @@ class RecordDetailFragment : Fragment() {
     private lateinit var startTimeTextView: TextView
     private lateinit var endTimeTextView: TextView
     private var spinnerValue = ""
-    private var itemList: ArrayList<String> = arrayListOf("default")
+    private var itemList: ArrayList<String> = arrayListOf("선택없음")
+
 
     private val recordViewModel: RecordViewModel by lazy {
         ViewModelProvider(this).get(RecordViewModel::class.java)
@@ -57,15 +65,8 @@ class RecordDetailFragment : Fragment() {
 
         if (prefList.size > 0) {
             itemList = prefList
+            itemList.add("추가하기")
         }
-
-
-//        Spinner Adapter 설정
-
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_item, R.id.text_first, itemList)
-        spinner.adapter = adapter
-
 
     }
 
@@ -108,6 +109,7 @@ class RecordDetailFragment : Fragment() {
         super.onStop()
         recordViewModel.saveRecord(record)
         updateUI()
+        itemList.remove("추가하기")
         ContextUtil.setArrayPref(requireContext(), PREF_TAG, itemList)
     }
 
@@ -115,14 +117,25 @@ class RecordDetailFragment : Fragment() {
     private fun setupEvents() {
 
         val memoWatcher = object : TextWatcher {
-            override fun beforeTextChanged(sequence: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
             }
 
-            override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(
+                sequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
                 record.memo = sequence.toString()
             }
 
             override fun afterTextChanged(p0: Editable?) {
+//                구현안함
             }
 
         }
@@ -136,9 +149,13 @@ class RecordDetailFragment : Fragment() {
             }
             recordViewModel.saveRecord(record)
             updateUI()
+            Toast.makeText(requireContext(), "내용이 저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
-
+        cancelButton.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
 
 //        Spinner 클릭 이벤트 설정
@@ -149,7 +166,22 @@ class RecordDetailFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                spinnerValue = itemList[position]
+                if ("추가하기" == itemList[position]) {
+                    val dlg = CustomDialog(requireContext())
+                    dlg.setOnOKClickedListener { content ->
+                        itemList.remove("추가하기")
+                        itemList.add(content)
+                        ContextUtil.setArrayPref(requireContext(), PREF_TAG, itemList)
+                        itemList.add("추가하기")
+                        record.item = content
+                        recordViewModel.saveRecord(record)
+                        Log.d(TAG, "현재 아이템 : ${record.item}")
+                        updateUI()
+                    }
+                    dlg.start()
+                } else {
+                    spinnerValue = itemList[position]
+                }
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {
@@ -161,11 +193,16 @@ class RecordDetailFragment : Fragment() {
 
 
     private fun updateUI() {
-        dateTextView.text = recordViewModel.convertTimestampToDate(record.date)
+        dateTextView.text = UIUtil.convertTimestampToDate(record.date)
         memoEditText.setText(record.memo)
-        startTimeTextView.text = recordViewModel.convertTimestampToTime(record.date)
-        endTimeTextView.text = recordViewModel.getEndTime(record.date, record.durationTime)
-        durationTimeTextView.text = recordViewModel.getDurationTime(record.durationTime)
+        startTimeTextView.text = UIUtil.getStartTime(record.date)
+        endTimeTextView.text = UIUtil.getEndTime(record.date, record.durationTime)
+        durationTimeTextView.text = UIUtil.getDurationTime(record.durationTime)
+
+        //        Spinner Adapter 설정
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.custom_spinner_item, R.id.text_first, itemList)
+        spinner.adapter = adapter
 
         for (i in 0 until itemList.size) {
             if (itemList[i] == record.item) {
@@ -186,8 +223,6 @@ class RecordDetailFragment : Fragment() {
             }
 
         }
-
-
 
 
     }

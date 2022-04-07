@@ -2,12 +2,110 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:padding="20dp"
     android:layout_height="match_parent">
 
     <TextView
+        android:text="@string/app_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="여기는 세팅 프래그먼트다!" />
+        android:layout_marginBottom="5dp"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/gray_box"
+        android:padding="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_height="150dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/language" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/theme" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="bottom"
+            android:text="@string/item_settings" />
+
+
+        <TextView
+            android:id="@+id/language_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="right"
+            android:text="한국어" />
+
+        <TextView
+            android:id="@+id/theme_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_vertical|right"
+            android:text="밝은테마" />
+
+
+        <TextView
+            android:id="@+id/item_settings_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="bottom|right"
+            android:text="추가 / 삭제 / 변경" />
+    </FrameLayout>
+
+
+    <TextView
+        android:text="@string/app_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/gray_box"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/tip_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/tip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="bottom"
+            android:text="@string/app_version" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:textSize="18sp"
+            android:text="Version 1.0" />
+
+    </FrameLayout>
+
+
+
+
 
 </LinearLayout>
