@@ -9,10 +9,11 @@
     <color name="gray">#595B83</color>
     <color name="white">#525252</color>
     <color name="beige">#525260</color>
-    <color name="white_pink">#31112C</color>
-    <color name="pastel_violet">#F2A07B</color>
+    <color name="white_pink">#515251</color>
+    <color name="pastel_violet">#082032</color>
     <color name="pastel_blue">#77ABB7</color>
     <color name="green_blue">#476D7C</color>
     <color name="deep_green_blue">#254B62</color>
     <color name="deep_green">#1D3E53</color>
+    <color name="my_text_color">#E3DBEE</color>
 </resources>

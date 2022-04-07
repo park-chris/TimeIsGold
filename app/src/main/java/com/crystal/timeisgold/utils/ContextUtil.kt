@@ -7,6 +7,7 @@ import org.json.JSONArray
 class ContextUtil {
     companion object {
         private val prefName = "timeIsGoldPref"
+        private val saveTheme = "savedTheme"
 
         fun setArrayPref(context: Context, tag: String, list: ArrayList<String>) {
 
@@ -43,6 +44,17 @@ class ContextUtil {
             }
 
             return resultArr
+        }
+
+
+        fun setSavedTheme(context: Context, theme: Boolean) {
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            pref.edit().putBoolean(saveTheme, theme).apply()
+        }
+
+        fun getSavedTheme(context: Context): Boolean {
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            return pref.getBoolean(saveTheme, false)
         }
     }
 }

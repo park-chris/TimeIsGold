@@ -29,7 +29,6 @@ class SettingsFragment: Fragment() {
     private lateinit var languageTextView: TextView
     private lateinit var themeTextView: TextView
     private lateinit var itemSettingsTextView: TextView
-    private val themeList: ArrayList<String> = arrayListOf("Light Theme", "Dark Theme")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +40,14 @@ class SettingsFragment: Fragment() {
         languageTextView = view.findViewById(R.id.language_text_view)
         themeTextView = view.findViewById(R.id.theme_text_view)
         itemSettingsTextView = view.findViewById(R.id.item_settings_text_view)
+
+        val savedTheme = ContextUtil.getSavedTheme(requireContext())
+
+        if (savedTheme) {
+            themeTextView.text = "Dark"
+        } else {
+            themeTextView.text = "Light"
+        }
 
         return view
     }
@@ -72,8 +79,14 @@ class SettingsFragment: Fragment() {
 
             val dlg = ThemeCustomDialog(requireContext())
             dlg.setOnOKClickedListener { content ->
-                Log.d(TAG, "content : $content")
+                Log.d(TAG, "content : ${themeTextView.text}")
                 callbacks?.onThemeSelected(content)
+                themeTextView.text = content
+                if (content == "dark") {
+                ContextUtil.setSavedTheme(requireContext(), true)
+                } else {
+                ContextUtil.setSavedTheme(requireContext(), false)
+                }
             }
             dlg.start()
 

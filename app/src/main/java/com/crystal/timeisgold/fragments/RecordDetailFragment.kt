@@ -3,6 +3,7 @@ package com.crystal.timeisgold.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -105,7 +106,6 @@ class RecordDetailFragment : Fragment() {
         itemList.remove("추가하기")
         ContextUtil.setArrayPref(requireContext(), PREF_TAG, itemList)
     }
-
 
     private fun setupEvents() {
 

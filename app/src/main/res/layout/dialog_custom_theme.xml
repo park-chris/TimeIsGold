@@ -19,7 +19,6 @@
         android:id="@+id/dark_button"
         android:layout_width="110dp"
         android:background="@drawable/dark_gray_pink_box"
-        android:textColor="#FFFFFF"
         android:layout_gravity="right|top"
         android:text="@string/dark_theme"
         android:layout_height="90dp" />
@@ -30,6 +29,7 @@
         android:textSize="14sp"
         android:layout_marginTop="15dp"
         android:layout_gravity="bottom|center_horizontal"
+        android:textColor="@color/my_text_color"
         android:text="@string/theme_choice" />
 
 </FrameLayout>

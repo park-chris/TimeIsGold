@@ -26,7 +26,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/violet_button_selector"
         android:text="@string/reset_record"
-        android:textColor="@color/deep_green"
+        android:textColor="@color/my_text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintStart_toStartOf="@+id/save_button" />
@@ -39,7 +39,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/violet_button_selector"
         android:text="@string/start_record"
-        android:textColor="@color/deep_green"
+        android:textColor="@color/my_text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintEnd_toEndOf="@+id/save_button" />
@@ -50,7 +50,7 @@
         android:layout_height="50dp"
         android:background="@drawable/green_button_selector"
         android:text="@string/save_record"
-        android:textColor="@color/white"
+        android:textColor="@color/my_text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

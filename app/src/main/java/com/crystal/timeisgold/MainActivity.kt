@@ -1,15 +1,18 @@
 package com.crystal.timeisgold
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.crystal.timeisgold.databinding.ActivityMainBinding
 import com.crystal.timeisgold.fragments.*
+import com.crystal.timeisgold.utils.ContextUtil
 import com.crystal.timeisgold.utils.ThemeManager
 import java.util.*
 
@@ -24,9 +27,16 @@ private const val KEY_TAG = "current_fragment"
 
 class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFragment.Callbacks, SettingsFragment.Callbacks {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val savedTheme = ContextUtil.getSavedTheme(this)
+
+        if (savedTheme) {
+            ThemeManager.applyTheme("dark")
+        }
 
         val currentFragment = savedInstanceState?.getString(KEY_TAG, null) ?: null
 
@@ -41,16 +51,6 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
             true
         }   else {
             setFragment(TAG_STOP_WATCH, StopWatchFragment())
-        }
-
-        ThemeManager.applyTheme("dark")
-
-        binding.testButton.setOnClickListener {
-
-            Log.d("MainActivity", "testButton Clicked")
-
-            ThemeManager.applyTheme("light")
-
         }
 
         setupEvents()
@@ -77,10 +77,18 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
         }
 
 
+
+
         val stopWatch = manager.findFragmentByTag(TAG_STOP_WATCH)
         val record = manager.findFragmentByTag(TAG_RECORD)
         val target = manager.findFragmentByTag(TAG_TARGET)
         val settings = manager.findFragmentByTag(TAG_SETTINGS)
+
+        manager.apply {
+            for (f in fragments) {
+                    beginTransaction().hide(f).commit()
+            }
+        }
 
         if (stopWatch != null) {
             ft.hide(stopWatch)
@@ -94,6 +102,7 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
         if (settings != null) {
             ft.hide(settings)
         }
+
 
         if(tag == TAG_STOP_WATCH) {
             if (stopWatch != null){
@@ -134,9 +143,15 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
     override fun onRecordSelected(recordId: UUID) {
         val fragment = RecordDetailFragment.newInstance(recordId)
 
+        supportFragmentManager.apply {
+            for (f in fragments) {
+                beginTransaction().hide(f).commit()
+            }
+        }
+
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -144,7 +159,6 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
     override fun onThemeSelected(theme: String) {
         ThemeManager.applyTheme(theme)
     }
-
 
 }
 
