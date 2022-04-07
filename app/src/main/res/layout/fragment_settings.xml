@@ -52,9 +52,8 @@
             android:id="@+id/theme_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_gravity="center_vertical|right"
-            android:text="밝은테마" />
+            android:layout_gravity="center|right"
+            android:text="밝은 테마"/>
 
 
         <TextView
@@ -103,9 +102,5 @@
             android:text="Version 1.0" />
 
     </FrameLayout>
-
-
-
-
 
 </LinearLayout>

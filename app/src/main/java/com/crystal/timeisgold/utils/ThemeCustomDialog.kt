@@ -11,28 +11,27 @@ import com.crystal.timeisgold.fragments.RecordDetailFragment
 
 private const val PREF_TAG = "pref_shared_item"
 
-class CustomDialog(context: Context) {
+class ThemeCustomDialog(context: Context) {
     private val dialog = Dialog(context)
-    private lateinit var itemEditText: EditText
-    private lateinit var okButton: Button
-    private lateinit var cancelButton: Button
+    private lateinit var lightButton: Button
+    private lateinit var darkButton: Button
     private lateinit var listener: CustomDialogClickedListener
 
     fun start() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)    // 타이틀바 제거
-        dialog.setContentView(R.layout.dialog_custom)           // 다이얼로그에 사용할 xml 파일 호출
-        dialog.setCancelable(false)            // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지않도록 함
+        dialog.setContentView(R.layout.dialog_custom_theme)           // 다이얼로그에 사용할 xml 파일 호출
+        dialog.setCancelable(true)            // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히도록 함
 
-        itemEditText = dialog.findViewById(R.id.item_edit_text)
-        okButton = dialog.findViewById(R.id.ok_button)
-        cancelButton = dialog.findViewById(R.id.cancel_button)
+        lightButton = dialog.findViewById(R.id.light_button)
+        darkButton = dialog.findViewById(R.id.dark_button)
 
-        okButton.setOnClickListener {
-            listener.onOKClicked("${itemEditText.text}")
+        lightButton.setOnClickListener {
+            listener.onOKClicked("light")
             dialog.dismiss()
         }
 
-        cancelButton.setOnClickListener {
+        darkButton.setOnClickListener {
+            listener.onOKClicked("dark")
             dialog.dismiss()
         }
 
@@ -47,7 +46,6 @@ class CustomDialog(context: Context) {
             }
         }
     }
-
 
     interface CustomDialogClickedListener {
         fun onOKClicked(content: String)

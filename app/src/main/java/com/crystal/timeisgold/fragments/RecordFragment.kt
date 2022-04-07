@@ -1,20 +1,14 @@
 package com.crystal.timeisgold.fragments
 
 import android.content.Context
-import android.icu.lang.UCharacter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.timeisgold.R
@@ -70,7 +64,6 @@ class RecordFragment : Fragment() {
             viewLifecycleOwner,
             Observer { records ->
                 records?.let {
-                    Log.i(TAG, "Got records ${records.size}")
                     updateUI(records)
                 }
             }
@@ -104,8 +97,6 @@ class RecordFragment : Fragment() {
             durationTimeTextView.text = "소요 시간  ${UIUtil.getDurationTime(this.record.durationTime)}"
             itemTextView.text = this.record.item
             dateTextView.text = UIUtil.convertTimestampToDate(this.record.date)
-
-
         }
 
         override fun onClick(v: View?) {

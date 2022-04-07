@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,7 +103,6 @@ class StopWatchFragment : Fragment() {
             record.date = date
             record.durationTime = time
             recordViewModel.saveRecord(record)
-            Log.d(TAG, "저장된 레코드 아이디 : ${record.id}")
             callbacks?.onRecordSelected(record.id)
         }
 
@@ -124,7 +122,6 @@ class StopWatchFragment : Fragment() {
 //        timer() 호출
         timerTask = kotlin.concurrent.timer(period = 1000) {
             time++                  // period=1000, 0.01초마다 time를 1씩 증가
-            Log.d(TAG, "타임: $time")
 
             val timerHandler = Handler(Looper.getMainLooper()) {
                 Handler(Looper.getMainLooper()).post {

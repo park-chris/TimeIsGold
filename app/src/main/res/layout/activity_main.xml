@@ -29,6 +29,13 @@
         app:itemIconTint="@drawable/navi_menu_selector"
         app:itemTextColor="@drawable/navi_menu_selector"/>
 
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dark theme로" />
+
 </LinearLayout>
 
 </layout>

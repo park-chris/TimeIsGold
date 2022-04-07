@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.crystal.timeisgold.databinding.ActivityMainBinding
 import com.crystal.timeisgold.fragments.*
+import com.crystal.timeisgold.utils.ThemeManager
 import java.util.*
 
 lateinit var binding: ActivityMainBinding
@@ -21,7 +22,7 @@ private const val TAG_SETTINGS = "settings_fragment"
 
 private const val KEY_TAG = "current_fragment"
 
-class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFragment.Callbacks {
+class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFragment.Callbacks, SettingsFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
             when (currentFragment) {
                 "StopWatchFragment" -> setFragment(TAG_STOP_WATCH, StopWatchFragment())
                 "RecordFragment" -> setFragment(TAG_RECORD, RecordFragment())
-                "TargetFragment" ->setFragment(TAG_TARGET, TargetFragment())
+                "TargetFragment" -> setFragment(TAG_TARGET, TargetFragment())
+
                 "SettingsFragment" -> setFragment(TAG_SETTINGS, SettingsFragment())
             }
             true
@@ -41,6 +43,15 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
             setFragment(TAG_STOP_WATCH, StopWatchFragment())
         }
 
+        ThemeManager.applyTheme("dark")
+
+        binding.testButton.setOnClickListener {
+
+            Log.d("MainActivity", "testButton Clicked")
+
+            ThemeManager.applyTheme("light")
+
+        }
 
         setupEvents()
 
@@ -129,6 +140,11 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
             .addToBackStack(null)
             .commit()
     }
+
+    override fun onThemeSelected(theme: String) {
+        ThemeManager.applyTheme(theme)
+    }
+
 
 }
 

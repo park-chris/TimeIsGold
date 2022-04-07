@@ -1,16 +1,12 @@
 package com.crystal.timeisgold.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.crystal.timeisgold.R
@@ -21,12 +17,9 @@ import androidx.lifecycle.Observer
 import com.crystal.timeisgold.utils.ContextUtil
 import com.crystal.timeisgold.utils.CustomDialog
 import com.crystal.timeisgold.utils.UIUtil
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.collections.ArrayList
 
 private const val ARG_RECORD_ID = "record_id"
-
-private const val TAG = "RecordDetailFragment"
 
 private const val PREF_TAG = "pref_shared_item"
 
@@ -175,7 +168,6 @@ class RecordDetailFragment : Fragment() {
                         itemList.add("추가하기")
                         record.item = content
                         recordViewModel.saveRecord(record)
-                        Log.d(TAG, "현재 아이템 : ${record.item}")
                         updateUI()
                     }
                     dlg.start()

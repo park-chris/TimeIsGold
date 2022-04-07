@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:layout_height="170dp">
+
+    <Button
+        android:id="@+id/light_button"
+        android:layout_width="110dp"
+        android:text="@string/light_theme"
+        android:layout_gravity="left|top"
+        android:background="@drawable/white_pink_box"
+        android:layout_height="90dp" />
+
+    <Button
+        android:id="@+id/dark_button"
+        android:layout_width="110dp"
+        android:background="@drawable/dark_gray_pink_box"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="right|top"
+        android:text="@string/dark_theme"
+        android:layout_height="90dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="@string/theme_choice" />
+
+</FrameLayout>
