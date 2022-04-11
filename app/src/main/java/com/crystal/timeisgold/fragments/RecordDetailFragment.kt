@@ -203,6 +203,8 @@ class RecordDetailFragment : Fragment() {
         }
     }
 
+
+
     companion object {
         fun newInstance(id: UUID): RecordDetailFragment {
 

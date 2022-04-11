@@ -22,6 +22,7 @@ private const val TAG_STOP_WATCH = "stop_watch_fragment"
 private const val TAG_RECORD = "record_fragment"
 private const val TAG_TARGET = "target_fragment"
 private const val TAG_SETTINGS = "settings_fragment"
+private const val TAG_RECORD_DETAIL = " record_detail_fragment"
 
 private const val KEY_TAG = "current_fragment"
 
@@ -86,7 +87,9 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
 
         manager.apply {
             for (f in fragments) {
-                    beginTransaction().hide(f).commit()
+                if (f == manager.findFragmentByTag(TAG_RECORD_DETAIL)){
+                    popBackStack()
+                }
             }
         }
 
@@ -143,15 +146,9 @@ class MainActivity : AppCompatActivity(), RecordFragment.Callbacks, StopWatchFra
     override fun onRecordSelected(recordId: UUID) {
         val fragment = RecordDetailFragment.newInstance(recordId)
 
-        supportFragmentManager.apply {
-            for (f in fragments) {
-                beginTransaction().hide(f).commit()
-            }
-        }
-
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment, TAG_RECORD_DETAIL)
             .addToBackStack(null)
             .commit()
     }
