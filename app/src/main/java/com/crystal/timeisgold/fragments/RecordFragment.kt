@@ -16,6 +16,7 @@ import com.crystal.timeisgold.R
 import com.crystal.timeisgold.Record
 import com.crystal.timeisgold.RecordRepository
 import com.crystal.timeisgold.RecordViewModel
+import com.crystal.timeisgold.utils.DividerDecoration
 import com.crystal.timeisgold.utils.UIUtil
 import java.util.*
 
@@ -54,6 +55,7 @@ class RecordFragment : Fragment() {
 
         recordRecyclerView = view.findViewById(R.id.record_recycler_view) as RecyclerView
         recordRecyclerView.layoutManager = LinearLayoutManager(context)
+        recordRecyclerView.addItemDecoration(DividerDecoration(requireContext(), R.drawable.line_divider, 20, 20))
         recordRecyclerView.adapter = adapter
 
         return view

@@ -7,5 +7,6 @@ class RecordApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         RecordRepository.initialize(this)
+        TargetRepository.initialize(this)
     }
 }

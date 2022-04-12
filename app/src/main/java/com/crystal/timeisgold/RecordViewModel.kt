@@ -30,4 +30,8 @@ class RecordViewModel: ViewModel() {
     fun addRecord(record: Record) {
         recordRepository.addRecord(record)
     }
+
+    fun deleteRecord(record: Record) {
+        recordRepository.deleteRecord(record)
+    }
 }

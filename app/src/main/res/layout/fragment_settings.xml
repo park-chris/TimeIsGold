@@ -42,25 +42,27 @@
 
         <TextView
             android:id="@+id/language_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:textSize="18sp"
-            android:layout_gravity="right"
-            android:text="한국어" />
+            android:layout_gravity="end" />
 
         <TextView
             android:id="@+id/theme_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|right" />
+            android:gravity="end"
+            android:layout_gravity="center|end" />
 
 
         <TextView
             android:id="@+id/item_settings_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:textSize="18sp"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:text="추가 / 삭제 / 변경" />
     </FrameLayout>
 
@@ -96,7 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:textSize="18sp"
             android:text="Version 1.0" />
 

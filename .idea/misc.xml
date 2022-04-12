@@ -33,17 +33,23 @@
         <entry key="app/src/main/res/drawable-hdpi/deep_green_button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-hdpi/green_button_selector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-hdpi/white_pink_button.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/line_divider.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/navi_menu_selector.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/pastel_violet_button.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/violet_button_selector.xml" value="0.1515" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_navi.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/dialog_custom.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/layout/dialog_custom_target_add.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/dialog_custom_theme.xml" value="0.21296296296296297" />
+        <entry key="app/src/main/res/layout/dialog_custom_time.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_record.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_record_detail.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_stop_watch.xml" value="0.19763641357421877" />
         <entry key="app/src/main/res/layout/fragment_target.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/list_item_record.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/list_item_target.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/menu/menu_toolbar.xml" value="0.30512820512820515" />
         <entry key="app/src/main/res/menu/navi_menu.xml" value="0.30512820512820515" />

@@ -1,6 +1,7 @@
 package com.crystal.timeisgold.fragments
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.crystal.timeisgold.utils.ContextUtil
 import com.crystal.timeisgold.utils.CustomDialog
 import com.crystal.timeisgold.utils.ThemeCustomDialog
 import com.crystal.timeisgold.utils.ThemeManager
+import java.util.*
 
 private const val TAG = "SettingsFragment"
 
@@ -49,6 +51,13 @@ class SettingsFragment: Fragment() {
             themeTextView.text = "Light"
         }
 
+        val lang = getSystemLanguage(requireContext())
+        if (lang == "ko") {
+            languageTextView.text = lang
+        } else {
+            languageTextView.text = "us"
+        }
+
         return view
     }
 
@@ -71,11 +80,8 @@ class SettingsFragment: Fragment() {
 
     private fun setEvents() {
 
-        languageTextView.setOnClickListener {
-            Toast.makeText(requireContext(), "현재 한국어로만 사용가능합니다.", Toast.LENGTH_SHORT).show()
-        }
-
         themeTextView.setOnClickListener {
+
 
             val dlg = ThemeCustomDialog(requireContext())
             dlg.setOnOKClickedListener { content ->
@@ -92,6 +98,17 @@ class SettingsFragment: Fragment() {
 
         }
 
+    }
+
+//    시스템 언어설정 가져오기
+    fun getSystemLanguage(context: Context): String {
+        val systemLocale: Locale
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            systemLocale = context.resources.configuration.locales.get(0)
+        } else {
+            systemLocale = context.resources.configuration.locale
+        }
+        return systemLocale.language
     }
 
 }

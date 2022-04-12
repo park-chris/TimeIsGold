@@ -37,6 +37,12 @@ class RecordRepository private constructor(context: Context){
         }
     }
 
+    fun deleteRecord(record: Record) {
+        executor.execute {
+            recordDao.deleteRecord(record)
+        }
+    }
+
     companion object {
 
         private var INSTANCE: RecordRepository? = null

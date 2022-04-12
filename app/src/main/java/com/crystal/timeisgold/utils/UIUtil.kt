@@ -15,7 +15,7 @@ class UIUtil {
         }
 
         fun getStartTime(date: Date): String {
-            val pattern = SimpleDateFormat("HH:mm:ss")
+            val pattern = SimpleDateFormat("HH: mm: ss")
             return pattern.format(date)
         }
 
