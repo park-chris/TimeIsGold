@@ -98,6 +98,12 @@ class SettingsFragment: Fragment() {
 
         }
 
+        itemSettingsTextView.setOnClickListener {
+
+
+
+        }
+
     }
 
 //    시스템 언어설정 가져오기

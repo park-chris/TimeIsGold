@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import com.crystal.timeisgold.utils.ContextUtil
 import com.crystal.timeisgold.utils.CustomDialog
 import com.crystal.timeisgold.utils.UIUtil
+import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
 private const val ARG_RECORD_ID = "record_id"
@@ -140,9 +141,17 @@ class RecordDetailFragment : Fragment() {
             if (spinnerValue != "") {
                 record.item = spinnerValue
             }
+
+
+            val pattern = SimpleDateFormat("yyyy-MM-dd")
+            record.created = pattern.format(record.date)
+
             recordViewModel.saveRecord(record)
             updateUI()
             Toast.makeText(requireContext(), "내용이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         cancelButton.setOnClickListener {
@@ -170,7 +179,7 @@ class RecordDetailFragment : Fragment() {
                         recordViewModel.saveRecord(record)
                         updateUI()
                     }
-                    dlg.start()
+                    dlg.start(requireContext())
                 } else {
                     spinnerValue = itemList[position]
                 }

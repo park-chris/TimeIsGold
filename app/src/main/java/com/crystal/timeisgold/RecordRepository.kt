@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.crystal.timeisgold.database.RecordDao
 import com.crystal.timeisgold.database.RecordDatabase
+import com.crystal.timeisgold.database.migration_1_2
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -17,13 +18,14 @@ class RecordRepository private constructor(context: Context){
         context.applicationContext,
         RecordDatabase::class.java,
         DATABASE_NAME
-    ).build()
+    ).addMigrations(migration_1_2).build()
 
     private val recordDao = database.RecordDao()
     private val executor = Executors.newSingleThreadExecutor()
 
     fun getRecords(): LiveData<List<Record>> = recordDao.getRecords()
     fun getRecord(id: UUID): LiveData<Record?> = recordDao.getRecord(id)
+    fun getTime(item: String): Int = recordDao.getTime(item)
 
     fun updateRecord(record: Record) {
         executor.execute {

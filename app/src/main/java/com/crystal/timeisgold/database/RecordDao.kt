@@ -14,6 +14,9 @@ interface RecordDao {
     @Query("SELECT * FROM record WHERE id=(:id)")
     fun getRecord(id: UUID): LiveData<Record?>
 
+    @Query("SELECT sum(durationTime) FROM record WHERE created = date('now', 'localtime') AND item=(:item)")
+    fun getTime(item: String): Int
+
     @Update
     fun updateRecord(record: Record)
 

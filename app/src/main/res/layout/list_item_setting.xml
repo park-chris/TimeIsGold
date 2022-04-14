@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="230dp">
+
+    <TextView
+        android:id="@+id/item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="항목"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/total_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="총 시간 : 7h 30m"
+        android:layout_gravity="right" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="190dp" />
+    
+
+</FrameLayout>
