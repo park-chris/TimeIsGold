@@ -98,6 +98,7 @@ class StopWatchFragment : Fragment() {
 
         saveButton.setOnClickListener {
             pause()
+            isRunning = !isRunning
             val record = Record()
             recordViewModel.addRecord(record)
             record.date = date

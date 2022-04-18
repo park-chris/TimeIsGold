@@ -26,6 +26,8 @@ class RecordRepository private constructor(context: Context){
     fun getRecords(): LiveData<List<Record>> = recordDao.getRecords()
     fun getRecord(id: UUID): LiveData<Record?> = recordDao.getRecord(id)
     fun getTime(item: String): Int = recordDao.getTime(item)
+    fun getDailyTime(): LiveData<List<Record>> = recordDao.getDailyTime()
+
 
     fun updateRecord(record: Record) {
         executor.execute {

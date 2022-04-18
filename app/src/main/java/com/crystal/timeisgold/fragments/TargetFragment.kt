@@ -2,25 +2,38 @@ package com.crystal.timeisgold.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.crystal.timeisgold.R
+import com.crystal.timeisgold.Record
 import com.crystal.timeisgold.RecordRepository
 import com.crystal.timeisgold.RecordViewModel
 import com.crystal.timeisgold.utils.ContextUtil
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.coroutines.runBlocking
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Year
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 private const val TAG = "TargetFragment"
 
@@ -29,8 +42,8 @@ private const val PREF_TAG = "pref_shared_item"
 class TargetFragment : Fragment() {
 
     private lateinit var pieChart: PieChart
-    private var itemList = arrayListOf<String>("")
-
+    private lateinit var lineChart: LineChart
+    private var itemList = arrayListOf("")
 
     private val recordViewModel: RecordViewModel by lazy {
         ViewModelProvider(this).get(RecordViewModel::class.java)
@@ -46,14 +59,24 @@ class TargetFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_target, container, false)
 
         pieChart = view.findViewById(R.id.pie_chart)
-
-
-
+        lineChart = view.findViewById(R.id.line_chart)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        itemList = ContextUtil.getArrayPref(requireContext(), PREF_TAG)
+        recordViewModel.recordDailyLiveData.observe(
+            viewLifecycleOwner,
+            Observer { records ->
+                records?.let {
+                    if (records.isNotEmpty()) {
+                        setLineChart(itemList, records)
+                    }
+                }
+            }
+        )
+
 
         setPieChart()
     }
@@ -65,26 +88,30 @@ class TargetFragment : Fragment() {
 
         val entries = ArrayList<PieEntry>()
 
-
         runBlocking {
             Thread {
                 var otherTime = 86400
                 for (i in 0 until itemList.size) {
                     val itemTime = recordRepository.getTime(itemList[i])
 
-                    if (itemTime != 0) {
+                    if (itemTime <= 60) {
+                        entries.add(PieEntry(100f, "null"))
+                        break
+                    } else {
                         otherTime -= itemTime
                         val result = itemTime.toFloat() % 86400 * 100
                         entries.add(PieEntry(result, itemList[i]))
                     }
+
+                    if (i == itemList.size - 1) {
+                        val result = otherTime.toFloat() % 86400 * 100
+                        entries.add(PieEntry(result, "null"))
+
+                    }
                 }
 
-                val result = otherTime.toFloat() % 86400 * 100
-
-                entries.add(PieEntry(result, "null"))
 
                 requireActivity().runOnUiThread() {
-
 
                     pieChart.setUsePercentValues(true)
 
@@ -122,8 +149,61 @@ class TargetFragment : Fragment() {
                 }
 
             }.start()
+
+
+        }
+    }
+
+    private fun setLineChart(items: List<String>, records: List<Record>) {
+
+//        data 가져오기
+        val priceList = mutableListOf<Int>()
+
+//        labels
+        val dailyList = mutableListOf<String>()
+
+        for (i in 0 until 7) {
+            val cal = Calendar.getInstance()
+
+            cal.get(Calendar.YEAR)
+            cal.get(Calendar.MONTH)
+            cal.add(Calendar.DATE, i-7)
+
+            val pattern = SimpleDateFormat("yyyy-MM-dd")
+            val today = pattern.format(cal.time)
+            dailyList.add(today)
+
+            Log.d(TAG, "dailyList $i 추가 : $today")
         }
 
 
+        val entries = ArrayList<Entry>()
+
+        for (i in items.indices) {
+            for (j in records.indices) {
+                val record: Record = records[j]
+                if (items[i] == record.item) {
+                    for (d in dailyList.indices) {
+                        if (record.created == dailyList[d]) {
+                            Log.d(TAG, "${dailyList[d]}의 레코드는 : ${record.created}")
+                            entries.add(Entry(d.toFloat(), record.durationTime.toFloat()))
+                        } else {
+                            entries.add(Entry(d.toFloat(), 0f))
+                        }
+                    }
+                }
+            }
+        }
+
+        val dataSet = LineDataSet(entries, "")
+        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(dailyList)
+
+        lineChart.getTransformer(YAxis.AxisDependency.LEFT)
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        val data = LineData(dataSet)
+
+        lineChart.data = data
+        lineChart.invalidate()
     }
 }

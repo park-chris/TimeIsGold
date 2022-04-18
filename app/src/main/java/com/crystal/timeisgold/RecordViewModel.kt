@@ -19,6 +19,12 @@ class RecordViewModel: ViewModel() {
         recordRepository.getRecord(recordId)
     }
 
+    val recordDailyLiveData = recordRepository.getDailyTime()
+
+    var dailyTimeList: LiveData<Record?> = Transformations.switchMap(recordIdLiveData) {recordId ->
+        recordRepository.getRecord(recordId)
+    }
+
     fun loadRecord(recordId: UUID) {
         recordIdLiveData.value = recordId
     }

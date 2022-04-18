@@ -17,6 +17,10 @@ interface RecordDao {
     @Query("SELECT sum(durationTime) FROM record WHERE created = date('now', 'localtime') AND item=(:item)")
     fun getTime(item: String): Int
 
+    @Query("SELECT * FROM record WHERE created BETWEEN date('now', 'start of day', '-8 days') AND date('now', 'start of day', '-1 day') ORDER BY date DESC")
+    fun getDailyTime(): LiveData<List<Record>>
+
+
     @Update
     fun updateRecord(record: Record)
 
