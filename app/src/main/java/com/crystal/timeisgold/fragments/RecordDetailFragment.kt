@@ -190,6 +190,7 @@ class RecordDetailFragment : Fragment() {
 
         }
 
+
     }
 
 

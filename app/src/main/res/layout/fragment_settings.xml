@@ -63,7 +63,7 @@
             android:gravity="end"
             android:textSize="18sp"
             android:layout_gravity="bottom|end"
-            android:text="추가 / 삭제 / 변경" />
+            android:text="@string/add_remove" />
     </FrameLayout>
 
 
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:textSize="18sp"
-            android:text="Version 1.0" />
+            android:text="@string/current_version" />
 
     </FrameLayout>
 

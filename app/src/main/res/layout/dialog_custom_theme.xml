@@ -11,7 +11,7 @@
         android:id="@+id/light_button"
         android:layout_width="110dp"
         android:text="@string/light_theme"
-        android:layout_gravity="left|top"
+        android:layout_gravity="start|top"
         android:background="@drawable/white_pink_box"
         android:layout_height="90dp" />
 
@@ -19,7 +19,7 @@
         android:id="@+id/dark_button"
         android:layout_width="110dp"
         android:background="@drawable/dark_gray_pink_box"
-        android:layout_gravity="right|top"
+        android:layout_gravity="end|top"
         android:text="@string/dark_theme"
         android:layout_height="90dp" />
 

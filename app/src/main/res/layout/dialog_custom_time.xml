@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="목표 시간" />
+        android:text="@string/target_time" />
 
     <NumberPicker
         android:id="@+id/hour_number_picker"
