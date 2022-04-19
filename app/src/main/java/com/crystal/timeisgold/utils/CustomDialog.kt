@@ -2,13 +2,11 @@ package com.crystal.timeisgold.utils
 
 import android.app.Dialog
 import android.content.Context
-import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.crystal.timeisgold.R
-import com.crystal.timeisgold.fragments.RecordDetailFragment
 
 private const val PREF_TAG = "pref_shared_item"
 

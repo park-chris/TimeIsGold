@@ -3,7 +3,6 @@ package com.crystal.timeisgold.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,7 @@ class RecordDetailFragment : Fragment() {
     private lateinit var startTimeTextView: TextView
     private lateinit var endTimeTextView: TextView
     private var spinnerValue = ""
-    private var itemList: ArrayList<String> = arrayListOf("선택없음")
+    private var itemList: ArrayList<String> = arrayListOf("default")
 
 
     private val recordViewModel: RecordViewModel by lazy {
@@ -189,8 +188,6 @@ class RecordDetailFragment : Fragment() {
             }
 
         }
-
-
     }
 
 

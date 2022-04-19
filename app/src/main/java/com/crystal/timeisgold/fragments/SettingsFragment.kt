@@ -1,24 +1,17 @@
 package com.crystal.timeisgold.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.crystal.timeisgold.R
-import com.crystal.timeisgold.utils.ContextUtil
-import com.crystal.timeisgold.utils.CustomDialog
-import com.crystal.timeisgold.utils.ThemeCustomDialog
-import com.crystal.timeisgold.utils.ThemeManager
+import com.crystal.timeisgold.utils.*
 import java.util.*
-
-private const val TAG = "SettingsFragment"
 
 class SettingsFragment: Fragment() {
 
@@ -31,6 +24,7 @@ class SettingsFragment: Fragment() {
     private lateinit var languageTextView: TextView
     private lateinit var themeTextView: TextView
     private lateinit var itemSettingsTextView: TextView
+    private lateinit var tipTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +36,8 @@ class SettingsFragment: Fragment() {
         languageTextView = view.findViewById(R.id.language_text_view)
         themeTextView = view.findViewById(R.id.theme_text_view)
         itemSettingsTextView = view.findViewById(R.id.item_settings_text_view)
+        tipTextView = view.findViewById(R.id.tip_text_view)
+
 
         val savedTheme = ContextUtil.getSavedTheme(requireContext())
 
@@ -52,10 +48,10 @@ class SettingsFragment: Fragment() {
         }
 
         val lang = getSystemLanguage(requireContext())
-        if (lang == "ko") {
+        if (lang == "us") {
             languageTextView.text = lang
         } else {
-            languageTextView.text = "us"
+            languageTextView.text = "ko"
         }
 
         return view
@@ -85,7 +81,6 @@ class SettingsFragment: Fragment() {
 
             val dlg = ThemeCustomDialog(requireContext())
             dlg.setOnOKClickedListener { content ->
-                Log.d(TAG, "content : ${themeTextView.text}")
                 callbacks?.onThemeSelected(content)
                 themeTextView.text = content
                 if (content == "dark") {
@@ -99,15 +94,19 @@ class SettingsFragment: Fragment() {
         }
 
         itemSettingsTextView.setOnClickListener {
+            val dlg = OptionsCustomDialog(requireContext())
+            dlg.start(requireContext())
+        }
 
-
-
+        tipTextView.setOnClickListener {
+            val dlg = TipCustomDialog(requireContext())
+            dlg.start()
         }
 
     }
 
 //    시스템 언어설정 가져오기
-    fun getSystemLanguage(context: Context): String {
+    private fun getSystemLanguage(context: Context): String {
         val systemLocale: Locale
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             systemLocale = context.resources.configuration.locales.get(0)

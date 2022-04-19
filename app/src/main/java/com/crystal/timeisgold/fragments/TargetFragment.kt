@@ -1,14 +1,11 @@
 package com.crystal.timeisgold.fragments
 
 import android.graphics.Color
-import android.icu.text.FormattedValue
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,8 +30,6 @@ import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
-private const val TAG = "TargetFragment"
 
 private const val PREF_TAG = "pref_shared_item"
 
@@ -74,9 +69,7 @@ class TargetFragment : Fragment() {
             viewLifecycleOwner,
             Observer { records ->
                 records?.let {
-                    if (records.isNotEmpty()) {
                         updateUI(itemList, records)
-                    }
                 }
             }
         )
@@ -152,7 +145,7 @@ class TargetFragment : Fragment() {
             lineChart.axisRight.setDrawLabels(false)
             lineChart.axisRight.setDrawAxisLine(false)
             lineChart.axisRight.setDrawGridLines(false)
-            lineChart.description.text = "최근 날짜"
+            lineChart.description.text = resources.getString(R.string.latest_date)
             lineChart.description.textColor = Color.GRAY
             lineChart.axisLeft.textColor = Color.GRAY
             lineChart.xAxis.textColor = Color.GRAY

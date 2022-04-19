@@ -1,7 +1,6 @@
 package com.crystal.timeisgold.utils
 
 import android.content.Context
-import android.util.Log
 import org.json.JSONArray
 
 class ContextUtil {

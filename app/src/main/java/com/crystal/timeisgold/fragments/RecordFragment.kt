@@ -1,8 +1,9 @@
 package com.crystal.timeisgold.fragments
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.timeisgold.R
 import com.crystal.timeisgold.Record
-import com.crystal.timeisgold.RecordRepository
 import com.crystal.timeisgold.RecordViewModel
 import com.crystal.timeisgold.utils.DividerDecoration
 import com.crystal.timeisgold.utils.UIUtil
 import java.util.*
-
-private const val TAG = "RecordListFragment"
 
 class RecordFragment : Fragment() {
 
@@ -32,14 +30,12 @@ class RecordFragment : Fragment() {
     private var callbacks: Callbacks? = null
 
     private lateinit var recordRecyclerView: RecyclerView
+    private lateinit var goneTextView: TextView
     private var adapter: RecordAdapter? = RecordAdapter(emptyList())
 
     private val recordViewModel: RecordViewModel by lazy {
         ViewModelProvider(this).get(RecordViewModel::class.java)
     }
-
-    private val recordRepository = RecordRepository.get()
-    val recordListLiveData = recordRepository.getRecords()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -58,6 +54,8 @@ class RecordFragment : Fragment() {
         recordRecyclerView.addItemDecoration(DividerDecoration(requireContext(), R.drawable.line_divider, 20, 20))
         recordRecyclerView.adapter = adapter
 
+        goneTextView = view.findViewById(R.id.gone_text_view)
+
         return view
     }
 
@@ -72,6 +70,7 @@ class RecordFragment : Fragment() {
             }
         )
 
+
     }
 
     override fun onDetach() {
@@ -79,7 +78,8 @@ class RecordFragment : Fragment() {
         callbacks = null
     }
 
-    private inner class RecordHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    private inner class RecordHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener,
+        View.OnLongClickListener {
 
         private lateinit var record: Record
 
@@ -91,13 +91,14 @@ class RecordFragment : Fragment() {
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
         }
 
         fun bind(record: Record) {
             this.record = record
-            startTimeTextView.text = "시작 시간  ${UIUtil.getStartTime(this.record.date)}"
-            endTimeTextView.text = "종료 시간  ${UIUtil.getEndTime(this.record.date, record.durationTime)}"
-            durationTimeTextView.text = "소요 시간  ${UIUtil.getDurationTime(this.record.durationTime)}"
+            startTimeTextView.text = "${resources.getString(R.string.start_time)}  ${UIUtil.getStartTime(this.record.date)}"
+            endTimeTextView.text = "${resources.getString(R.string.end_time)}  ${UIUtil.getEndTime(this.record.date, record.durationTime)}"
+            durationTimeTextView.text = "${UIUtil.getDurationTime(this.record.durationTime)}"
             itemTextView.text = this.record.item
             dateTextView.text = UIUtil.convertTimestampToDate(this.record.date)
         }
@@ -105,6 +106,21 @@ class RecordFragment : Fragment() {
         override fun onClick(v: View?) {
             callbacks?.onRecordSelected(record.id)
         }
+
+        override fun onLongClick(v: View?): Boolean {
+
+            val alert = AlertDialog.Builder(requireContext())
+            alert.setCancelable(false)
+            alert.setMessage("이 기록을 삭제하시겠습니까?")
+            alert.setPositiveButton("삭제",DialogInterface.OnClickListener{_, _ ->
+                recordViewModel.deleteRecord(record)
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+            return true
+        }
+
+
     }
 
     private inner class RecordAdapter(var records: List<Record>): RecyclerView.Adapter<RecordHolder>(){
@@ -125,6 +141,11 @@ class RecordFragment : Fragment() {
     private fun updateUI(records: List<Record>) {
         adapter = RecordAdapter(records)
         recordRecyclerView.adapter = adapter
+
+        if (records.isEmpty()) {
+            goneTextView.visibility = View.VISIBLE
+        }
     }
+
 
 }

@@ -17,9 +17,6 @@ import com.crystal.timeisgold.RecordViewModel
 import com.crystal.timeisgold.utils.UIUtil
 import java.util.*
 
-
-private const val TAG = "StopWatchFragment"
-
 class StopWatchFragment : Fragment() {
 
     interface Callbacks {

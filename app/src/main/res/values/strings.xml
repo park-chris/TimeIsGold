@@ -12,7 +12,7 @@
     <string name="date">날짜</string>
     <string name="save">저장</string>
     <string name="item">항목</string>
-    <string name="start_time">시작 시작</string>
+    <string name="start_time">시작 시간</string>
     <string name="end_time">종료 시간</string>
     <string name="duration_time">소요 시간</string>
     <string name="target_time">목표 시간</string>
@@ -34,7 +34,19 @@
     <string name="ok">확인</string>
     <string name="today_record">오늘의 기록</string>
     <string name="item_record">항목 별 기록</string>
+    <string name="latest_date">최근 날짜</string>
     <string name="hour_date">hour/date</string>
-    <string name="add_remove">추가 / 삭제 / 변경</string>
-    <string name="current_version">Version 1.0</string>
+    <string name="add_remove">삭제</string>
+    <string name="current_version">1.0</string>
+    <string name="close">닫기</string>
+    <string name="notification">현재 저장된 기록이 없습니다.</string>
+    <string name="tip_memo">
+        - 이 앱은 시간을 측정하고 저장할 수 있습니다.
+        \n\n- 저장된 시간은 기록되며(왼쪽에서 2번째 탭), 기록된 시간으로 그래프(왼쪽에서 3번째 탭)를 그려줍니다.
+        \n\n- 기록을 할때 사용되는 \'항목\'은 기록 저장 시 추가할 수 있으며, 설정탭(왼쪽에서 4번째 탭)에서 삭제할 수 있습니다.
+        \n\n- 항목과 기록은 별개로, 항목이 삭제되어도 기록은 삭제되지 않습니다.
+        \n\n- 기록을 삭제하는 방법은 왼쪽에서 2번째 탭에서 삭제하고 싶은 기록을 2초 정도 길게 눌러주시면 삭제를 할것인지 물어보는 문구가 뜨며 취소와 삭제가 가능합니다.
+
+        \n\n\n- 이 앱을 다운로드하고 사용하여 주셔서 감사합니다.
+    </string>
 </resources>

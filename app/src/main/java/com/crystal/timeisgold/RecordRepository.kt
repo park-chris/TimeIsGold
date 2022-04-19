@@ -3,11 +3,9 @@ package com.crystal.timeisgold
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import com.crystal.timeisgold.database.RecordDao
 import com.crystal.timeisgold.database.RecordDatabase
 import com.crystal.timeisgold.database.migration_1_2
 import java.util.*
-import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 private const val DATABASE_NAME = "record-database"

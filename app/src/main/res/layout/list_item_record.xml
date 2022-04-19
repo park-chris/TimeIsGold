@@ -9,29 +9,30 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/start_time_text"
+        android:id="@+id/date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/end_time_text"
+        android:id="@+id/start_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_time_text" />
+        app:layout_constraintTop_toBottomOf="@+id/date_text" />
 
     <TextView
-        android:id="@+id/duration_time_text"
+        android:id="@+id/end_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/end_time_text" />
+        app:layout_constraintTop_toBottomOf="@+id/start_time_text"
+        android:textSize="15sp"/>
 
     <TextView
         android:id="@+id/item_text"
@@ -43,13 +44,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/date_text"
+        android:id="@+id/duration_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
