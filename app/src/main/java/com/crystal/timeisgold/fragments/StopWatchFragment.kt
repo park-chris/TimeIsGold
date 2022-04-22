@@ -42,8 +42,6 @@ class StopWatchFragment : Fragment() {
     private var date: Date = Date(System.currentTimeMillis())
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -95,7 +93,9 @@ class StopWatchFragment : Fragment() {
 
         saveButton.setOnClickListener {
             pause()
-            isRunning = !isRunning
+            if (isRunning) {
+                isRunning = !isRunning
+            }
             val record = Record()
             recordViewModel.addRecord(record)
             record.date = date
@@ -149,7 +149,6 @@ class StopWatchFragment : Fragment() {
         timeTextView.text = "00: 00: 00"
 
     }
-
 
 
 }

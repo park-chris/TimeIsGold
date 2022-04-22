@@ -48,10 +48,10 @@ class SettingsFragment: Fragment() {
         }
 
         val lang = getSystemLanguage(requireContext())
-        if (lang == "us") {
+        if (lang == "ko") {
             languageTextView.text = lang
         } else {
-            languageTextView.text = "ko"
+            languageTextView.text = "us"
         }
 
         return view

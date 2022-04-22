@@ -9,7 +9,15 @@ class MyValueFormatter: ValueFormatter() {
     private val format = DecimalFormat ("###,##")
 
     override fun getPointLabel(entry: Entry?): String {
-        return format.format(entry?.y)
+        return format.format(entry?.y) + "h"
     }
 
+    override fun getFormattedValue(value: Float): String {
+
+        val hour = value / 3600
+        val extra = value % 3600
+        val min = extra / 60
+
+        return "${format.format(hour)}h ${format.format(min)}m"
+    }
 }

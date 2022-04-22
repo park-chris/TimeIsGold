@@ -1,5 +1,6 @@
 package com.crystal.timeisgold.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -73,7 +74,6 @@ class TargetFragment : Fragment() {
                 }
             }
         )
-        setPieChart()
     }
 
     private inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -179,32 +179,34 @@ class TargetFragment : Fragment() {
 
         val entries = ArrayList<PieEntry>()
 
+        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+        pieChart.minAngleForSlices = 20f
+
+
+
         runBlocking {
             Thread {
                 var otherTime = 86400
                 for (i in 0 until itemList.size) {
                     val itemTime = recordRepository.getTime(itemList[i])
 
-                    if (itemTime <= 60) {
-                        entries.add(PieEntry(100f, "null"))
-                        break
-                    } else {
+                    if (itemTime > 100) {
                         otherTime -= itemTime
-                        val result = itemTime.toFloat() / 86400 * 100
-                        entries.add(PieEntry(result, itemList[i]))
+                        entries.add(PieEntry(itemTime.toFloat(), itemList[i]))
                     }
 
                     if (i == itemList.size - 1) {
-                        val result = otherTime.toFloat() / 86400 * 100
-                        entries.add(PieEntry(result, "null"))
+                        if (entries.isEmpty()) {
+                            entries.add(PieEntry(86400f, "null"))
+                        } else {
 
+                            entries.add(PieEntry(otherTime.toFloat(), "null"))
+                        }
                     }
                 }
 
 
-                requireActivity().runOnUiThread() {
-
-                    pieChart.setUsePercentValues(true)
+                requireActivity().runOnUiThread {
 
                     val colorsItems = ArrayList<Int>()
 
@@ -219,9 +221,13 @@ class TargetFragment : Fragment() {
                         colors = colorsItems
                         valueTextColor = Color.BLACK
                         valueTextSize = 16f
+                        xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+                        valueLinePart1OffsetPercentage = 70f
+                        valueLinePart1Length = 0.4f
+                        valueLinePart2Length = 0.2f
                     }
 
-                    pieDataSet.valueFormatter = PercentFormatter()
+                    pieDataSet.valueFormatter = MyValueFormatter()
 
                     val pieData = PieData(pieDataSet)
                     pieChart.apply {
@@ -250,6 +256,7 @@ class TargetFragment : Fragment() {
     private fun updateUI(items: List<String>, records: List<Record>) {
         adapter = ItemAdapter(items, records)
         itemRecyclerView.adapter = adapter
+        setPieChart()
     }
 
 }
