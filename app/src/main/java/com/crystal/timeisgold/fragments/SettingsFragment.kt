@@ -1,6 +1,5 @@
 package com.crystal.timeisgold.fragments
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.crystal.timeisgold.BuildConfig
 import com.crystal.timeisgold.R
 import com.crystal.timeisgold.utils.*
 import java.util.*
@@ -25,6 +25,7 @@ class SettingsFragment: Fragment() {
     private lateinit var themeTextView: TextView
     private lateinit var itemSettingsTextView: TextView
     private lateinit var tipTextView: TextView
+    private lateinit var versionTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,9 @@ class SettingsFragment: Fragment() {
         themeTextView = view.findViewById(R.id.theme_text_view)
         itemSettingsTextView = view.findViewById(R.id.item_settings_text_view)
         tipTextView = view.findViewById(R.id.tip_text_view)
+        versionTextView = view.findViewById(R.id.version_text_view)
 
+        versionTextView.text = BuildConfig.VERSION_NAME
 
         val savedTheme = ContextUtil.getSavedTheme(requireContext())
 
@@ -49,9 +52,9 @@ class SettingsFragment: Fragment() {
 
         val lang = getSystemLanguage(requireContext())
         if (lang == "ko") {
-            languageTextView.text = lang
+            languageTextView.text = "한국어"
         } else {
-            languageTextView.text = "us"
+            languageTextView.text = "English"
         }
 
         return view

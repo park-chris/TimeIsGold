@@ -7,7 +7,8 @@
     android:padding="20dp">
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:overScrollMode="never"
                 android:id="@+id/target_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -44,7 +46,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

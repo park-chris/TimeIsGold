@@ -27,6 +27,8 @@ class CustomDialog(context: Context) {
         okButton = dialog.findViewById(R.id.ok_button)
         cancelButton = dialog.findViewById(R.id.cancel_button)
 
+        itemEditText.setText("")
+
         okButton.setOnClickListener {
 
             var bool = false
